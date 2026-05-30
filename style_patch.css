@@ -1,0 +1,45 @@
+/* ── 과목별 점수 카드 (style.css 맨 아래에 붙여넣기) ── */
+#subj-breakdown { margin: 0 0 4px; }
+
+.subj-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border: 1px solid var(--bdr);
+}
+
+.subj-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subj-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.subj-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tx);
+  margin-bottom: 3px;
+}
+
+.subj-detail {
+  font-size: 12px;
+  color: var(--tx3);
+}
+
+.subj-score {
+  font-size: 22px;
+  font-weight: 700;
+  min-width: 52px;
+  text-align: right;
+}
