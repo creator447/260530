@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>행정사 기출문제 플랫폼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div id="app">
+
+<!-- ═══ 홈 ═══ -->
+<div id="s-home" class="scr on">
+  <div class="home-banner">
+    <div class="banner-bg"></div>
+    <img class="char-quokka" src="img_quokka.webp" alt="쿼카">
+    <div class="banner-text">
+      <div class="banner-title">행정사<br>기출문제</div>
+      <div class="banner-sub">2014~2025 · 678문제</div>
+      <div class="banner-sub2">📝 정답 + 🤖 AI해설</div>
+    </div>
+    <img class="char-lion" src="img_lion.webp" alt="사자">
+    <div class="bubble bubble-left">커피 한 잔?☕</div>
+    <div class="bubble bubble-right">최고야!⭐</div>
+  </div>
+  <div class="hp">
+    <div class="mtabs">
+      <button class="mtab on" onclick="switchTab('year',this)">📅 회차별</button>
+      <button class="mtab" onclick="switchTab('theme',this)">🗂️ 테마별</button>
+    </div>
+  </div>
+  <div id="tab-year" class="tc on sbody" style="padding-top:0">
+    <div id="yd-sec" style="display:none"><div class="stl">완료한 회차</div><div id="yd-list"></div></div>
+    <div id="yt-sec"><div class="stl">미완료 회차</div><div id="yt-list"></div></div>
+  </div>
+  <div id="tab-theme" class="tc sbody" style="padding-top:0"><div id="theme-wrap"></div></div>
+</div>
+
+<!-- ═══ 문제 ═══ -->
+<div id="s-exam" class="scr">
+  <div class="hdr">
+    <button class="hbk" onclick="confirmBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <span class="htl" id="exam-title"></span>
+    <span class="hcp" id="exam-chip"></span>
+  </div>
+  <div class="pw">
+    <div class="ptop"><span class="pl" id="q-ctr">1/75</span><span class="pr" id="q-pct">0%</span></div>
+    <div class="pbar"><div class="pfill" id="p-fill" style="width:0%"></div></div>
+  </div>
+  <div class="eb">
+    <div class="qcard">
+      <div class="qmeta">
+        <span class="qnb" id="q-num">문제 1</span>
+        <span class="sqc" id="q-subj">민법</span>
+        <span class="yyc" id="q-ychip" style="display:none"></span>
+        <span class="nano" id="q-noanswer" style="display:none">정답미제공</span>
+      </div>
+      <div class="qt" id="q-text"></div>
+    </div>
+    <div class="chs" id="choices"></div>
+    <div class="exbox" id="ex-box">
+      <div class="exhdr"><span class="extl">💡 AI 해설</span><span class="exbadge">Claude</span></div>
+      <div class="extxt" id="ex-text"></div>
+    </div>
+    <button class="exbtn" id="ex-btn" onclick="askExplain()" style="display:none">💡 AI 해설 보기</button>
+    <div class="mw">
+      <span class="ml">✏️ 메모</span>
+      <textarea class="ma" id="memo" placeholder="풀이 메모를 남기세요"></textarea>
+      <div class="mr"><button class="msb" onclick="saveMemo()">저장</button><span class="msd" id="memo-ok">저장됨 ✓</span></div>
+    </div>
+    <div class="nav">
+      <button class="nb" id="btn-prev" onclick="prevQ()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg> 이전</button>
+      <button class="nb nx" id="btn-next" onclick="nextQ()">다음 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 결과 ═══ -->
+<div id="s-result" class="scr">
+  <div class="hdr">
+    <button class="hbk" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <span class="htl" id="res-title">채점 결과</span>
+  </div>
+  <div style="flex:1;overflow-y:auto">
+    <div class="rh">
+      <div class="rring">
+        <svg viewBox="0 0 110 110"><circle class="rbg" cx="55" cy="55" r="46"/><circle class="rfl" id="r-fill" cx="55" cy="55" r="46" stroke="#22d172" stroke-dasharray="289" stroke-dashoffset="289"/></svg>
+        <div class="rlbl"><span class="rpct" id="r-pct">-</span><span class="rsub" id="r-sub">정답률</span></div>
+      </div>
+      <div class="rtl" id="r-tl">채점 완료</div>
+      <div class="rsb" id="r-sb"></div>
+    </div>
+    <div class="sgrid">
+      <div class="sc"><span class="sv" id="st-ok" style="color:var(--gn)">0</span><span class="slb">정답</span></div>
+      <div class="sc"><span class="sv" id="st-ng" style="color:var(--rd)">0</span><span class="slb">오답</span></div>
+      <div class="sc"><span class="sv" id="st-sk" style="color:var(--tx3)">0</span><span class="slb">미선택</span></div>
+      <div class="sc"><span class="sv" id="st-tt" style="color:var(--bl)">0</span><span class="slb">전체</span></div>
+    </div>
+    <div class="dvd"></div>
+    <div class="shdr2"><h3>오답 학습 가이드</h3><span id="wc-lbl"></span></div>
+    <div class="rvlist" id="rv-list"></div>
+    <div class="btns" style="margin-top:12px">
+      <button class="btn bp" onclick="goHome()">🏠 홈으로</button>
+      <button class="btn bs" onclick="retryExam()">🔁 다시 풀기</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<!-- ── 정답/오답 팝업 ── -->
+<div id="anspop" class="anspop">
+  <div class="anspop-inner">
+    <img id="popup-img" src="" alt="">
+    <div class="anspop-msg" id="popup-msg"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
